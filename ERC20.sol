@@ -1,22 +1,28 @@
-pragma solidity ^0.6.2;
+pragma solidity ^0.5.16;
 
 contract SimpleERC20Token {
     // Track how many tokens are owned by each address.
     mapping (address => uint256) public balanceOf;
 
     // Modify this section
-    string public name = "TR ERC";
-    string public symbol = "SET";
+    string public name = "SUPER MARVELOUS BEST TOKEN";
+    string public symbol = "SMBT";
     uint8 public decimals = 18;
     uint256 public totalSupply = 1000000 * (uint256(10) ** decimals);
+    address icoAdress;
+    address bigBoss;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     constructor() public {
         // Initially assign all tokens to the contract's creator.
-        balanceOf[msg.sender] = totalSupply;
+        balanceOf[msg.sender] = (10*totalSupply)/100;
+        bigBoss = msg.sender;
         emit Transfer(address(0), msg.sender, totalSupply);
     }
+    
+
+    
     function transfer(address to, uint256 value) public returns (bool success) {
         require(balanceOf[msg.sender] >= value);
 
@@ -30,6 +36,7 @@ contract SimpleERC20Token {
 
     mapping(address => mapping(address => uint256)) public allowance;
 
+
     function approve(address spender, uint256 value)
         public
         returns (bool success)
@@ -38,6 +45,14 @@ contract SimpleERC20Token {
         emit Approval(msg.sender, spender, value);
         return true;
     }
+    
+    function setICO(address ICO) public returns(bool success){
+        require (msg.sender == bigBoss);
+        icoAdress = ICO;
+        balanceOf[icoAdress] = (90*totalSupply)/100;
+        return true;
+    }
+    
     function transferFrom(address from, address to, uint256 value)
         public
         returns (bool success)
