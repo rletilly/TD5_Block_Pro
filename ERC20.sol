@@ -21,8 +21,6 @@ contract SimpleERC20Token {
         emit Transfer(address(0), msg.sender, totalSupply);
     }
     
-
-    
     function transfer(address to, uint256 value) public returns (bool success) {
         require(balanceOf[msg.sender] >= value);
 
