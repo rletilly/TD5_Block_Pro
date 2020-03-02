@@ -18,7 +18,7 @@ contract SimpleERC20Token {
         // Initially assign all tokens to the contract's creator.
         balanceOf[msg.sender] = (10*totalSupply)/100;
         bigBoss = msg.sender;
-        emit Transfer(address(0), msg.sender, totalSupply);
+        emit Transfer(address(0), msg.sender, totalSupply/10);
     }
     
     function transfer(address to, uint256 value) public returns (bool success) {
@@ -43,14 +43,19 @@ contract SimpleERC20Token {
         emit Approval(msg.sender, spender, value);
         return true;
     }
-    
+    //fonction qui ne peut être appelée que part le créateur du contrat pour donner sa balance a l'ico 
     function setICO(address ICO) public returns(bool success){
         require (msg.sender == bigBoss);
         icoAdress = ICO;
         balanceOf[icoAdress] = (90*totalSupply)/100;
+        emit Transfer(address(0), ICO, (90*totalSupply)/100);
         return true;
     }
     
+    function getbal(address from) view public returns (uint bal)
+    {
+        return balanceOf[from];
+    }
     function transferFrom(address from, address to, uint256 value)
         public
         returns (bool success)
@@ -63,5 +68,9 @@ contract SimpleERC20Token {
         allowance[from][msg.sender] -= value;
         emit Transfer(from, to, value);
         return true;
+    }
+    function setvaleur(uint prix_init)view public returns(uint recompense)
+    {
+        return(prix_init * ((balanceOf[icoAdress]*10)/totalSupply));
     }
 }
