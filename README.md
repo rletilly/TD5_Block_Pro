@@ -40,5 +40,4 @@ Then we iterate through the list and call transfer function with a given price f
 
 Question 9: For the most part of the project we used remix wich is a solidity debugger and we runned it on ropsten with Web3 injected.
 That way, our project is already running on a testnet.
-
-
+To credit tokens to the teacher adress, we simply added it to our recipens array and use the function air drop.
